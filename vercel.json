@@ -1,18 +1,18 @@
 {
-  "build": {
-    "env": {
-      "PIP_VERSION": "24.0"
-    }
-  },
-  "functions": {
-    "api/index.py": {
-      "runtime": "python3.11" 
-    }
-  },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "api/index.py"
-    }
-  ]
-}
+    "build": {
+      "env": {
+        "PIP_VERSION": "24.0"
+      }
+    },
+    "functions": {
+      "api/index.py": {
+        "runtime": "python3.13"
+      }
+    },
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "api/index.py"
+      }
+    ]
+  }
