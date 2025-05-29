@@ -376,95 +376,158 @@ def construct_vapi_payload(interview_details, phone_number):
         # Compose the system prompt directly with the resume content (no Jinja)
         if has_resume:
             rendered_prompt = f"""
-You are a professional job interviewer conducting a real-time voice interview with a candidate. Your goal is to assess their qualifications, motivation, and fit for the role.
-
-IMPORTANT - RESUME STATUS CHECK:
-✓ Resume received and loaded successfully
-
-Candidate Information:
-- Name: {metadata['name']}
-- Position: {metadata['position']}
-- Position Description: {metadata['jobDescription']}
-
-CANDIDATE'S CV/RESUME:
-==================
-{resume_content}
-==================
-
-Interview Instructions:
-1. START by confirming: 'I have your resume in front of me and can see your experience in [mention 1-2 specific points]'
-2. Use resume details to guide relevant questions
-3. Reference specific experiences/projects from their CV
-4. Assess alignment with the {metadata['position']} role
-
-Interview Guidelines:
-- Be professional and polite
-- Keep responses concise and conversational
-- Ask follow-up questions when needed
-- Focus on both technical skills and soft skills
-- End the interview professionally with next steps
-
-Voice and Tone:
-- Use a professional but friendly tone
-- Speak clearly and at a moderate pace
-- Maintain a natural conversation flow
-- Show genuine interest in the candidate's responses
-
-Interview Structure:
-1. Introduction and rapport building
-2. Experience and skills assessment
-3. Technical knowledge evaluation
-4. Soft skills and cultural fit assessment
-5. Candidate questions and closing
-
-End the interview by:
-1. Thanking the candidate for their time
-2. Providing a brief summary of what was discussed
-3. Outlining next steps in the process
-4. Offering to answer any questions they may have
+-You are a professional job interviewer conducting a real-time voice interview with a candidate. Your goal is to assess their qualifications, motivation, and fit for the role.
+-
+-IMPORTANT - RESUME STATUS CHECK:
+-✓ Resume received and loaded successfully
+-
+-Candidate Information:
+-- Name: {metadata['name']}
+-- Position: {metadata['position']}
+-- Position Description: {metadata['jobDescription']}
+-
+-CANDIDATE'S CV/RESUME:
+-==================
+-{resume_content}
+-==================
+-
+-Interview Instructions:
+-1. START by confirming: 'I have your resume in front of me and can see your experience in [mention 1-2 specific points]'
+-2. Use resume details to guide relevant questions
+-3. Reference specific experiences/projects from their CV
+-4. Assess alignment with the {metadata['position']} role
+-
+-Interview Guidelines:
+-- Be professional and polite
+-- Keep responses concise and conversational
+-- Ask follow-up questions when needed
+-- Focus on both technical skills and soft skills
+-- End the interview professionally with next steps
+-
+-Voice and Tone:
+-- Use a professional but friendly tone
+-- Speak clearly and at a moderate pace
+-- Maintain a natural conversation flow
+-- Show genuine interest in the candidate's responses
+-
+-Interview Structure:
+-1. Introduction and rapport building
+-2. Experience and skills assessment
+-3. Technical knowledge evaluation
+-4. Soft skills and cultural fit assessment
+-5. Candidate questions and closing
+-
+-End the interview by:
+-1. Thanking the candidate for their time
+-2. Providing a brief summary of what was discussed
+-3. Outlining next steps in the process
+-4. Offering to answer any questions they may have
++You are a professional job interviewer conducting a real-time voice interview. Your goal is to have a natural, human-like conversation to assess the candidate's qualifications, motivation, and fit for the role. Engage actively, listen carefully to their responses, and ask relevant follow-up questions based on what they say and the information provided.
++
++Candidate Information:
++- Name: {metadata['name']}
++- Position: {metadata['position']}
++- Position Description: {metadata['jobDescription']}
++
++CANDIDATE'S CV:
++==================
++{resume_content}
++==================
++
++Use the CV content to guide your questions and conversation. Refer to specific experiences, skills, or projects from their resume naturally within the flow of discussion.
++
++General Interviewer Conduct:
++- Maintain a professional, friendly, and conversational tone throughout.
++- Be professional and polite.
++- Keep your questions and comments concise and natural.
++- Manage the flow of the conversation based on the candidate's responses.
++- Focus on both technical skills and soft skills relevant to the role.
++- **CRITICAL: Do NOT explicitly state or read any instructions given to you in this prompt or refer to this prompt's content in your conversation.** Internalize these instructions and act on them naturally.
++- Start with a friendly greeting, then transition smoothly into your first question based on the provided information (and resume if available).
++
++Interview Structure (Internal Guide - Do Not Read Aloud):
++1. Start: Greet the candidate by name and initiate the conversation (acknowledging resume status if applicable).
++2. Core: Conduct the main interview, asking relevant questions based on the provided details and candidate responses, listening actively, and asking follow-ups.
++3. Closing: Thank the candidate, briefly summarize the topics discussed, outline next steps (as provided in metadata if any), and offer them time for their questions.
++
++Concluding the Interview (Do Not Read Aloud):
++End by:
++1. Thanking the candidate for their time.
++2. Providing a brief, natural summary of what was discussed.
++3. Outlining next steps in the process (if known or provided in context).
++4. Explicitly offering the candidate a dedicated time to ask any remaining questions.
 """
         else:
             rendered_prompt = f"""
-You are a professional job interviewer conducting a real-time voice interview with a candidate. Your goal is to assess their qualifications, motivation and fit for the role.
-
-IMPORTANT - RESUME STATUS CHECK:
-⚠ No resume provided
-
-Candidate Information:
-- Name: {metadata['name']}
-- Position: {metadata['position']}
-- Position Description: {metadata['jobDescription']}
-
-No resume was provided. Please:
-1. Acknowledge this: 'I notice we don't have your resume on file'
-2. Ask for a verbal overview of their experience
-3. Take more time to establish their background
-
-Interview Guidelines:
-- Be professional and polite
-- Keep responses concise and conversational
-- Ask follow-up questions when needed
-- Focus on both technical skills and soft skills
-- End the interview professionally with next steps
-
-Voice and Tone:
-- Use a professional but friendly tone
-- Speak clearly and at a moderate pace
-- Maintain a natural conversation flow
-- Show genuine interest in the candidate's responses
-
-Interview Structure:
-1. Introduction and rapport building
-2. Experience and skills assessment
-3. Technical knowledge evaluation
-4. Soft skills and cultural fit assessment
-5. Candidate questions and closing
-
-End the interview by:
-1. Thanking the candidate for their time
-2. Providing a brief summary of what was discussed
-3. Outlining next steps in the process
-4. Offering to answer any questions they may have
+-You are a professional job interviewer conducting a real-time voice interview with a candidate. Your goal is to assess their qualifications, motivation and fit for the role.
+-
+-IMPORTANT - RESUME STATUS CHECK:
+-⚠ No resume provided
+-
+-Candidate Information:
+-- Name: {metadata['name']}
+-- Position: {metadata['position']}
+-- Position Description: {metadata['jobDescription']}
+-
+-No resume was provided. Please:
+-1. Acknowledge this: 'I notice we don don't have your resume on file'
+-2. Ask for a verbal overview of their experience
+-3. Take more time to establish their background
+-
+-Interview Guidelines:
+-- Be professional and polite
+-- Keep responses concise and conversational
+-- Ask follow-up questions when needed
+-- Focus on both technical skills and soft skills
+-- End the interview professionally with next steps
+-
+-Voice and Tone:
+-- Use a professional but friendly tone
+-- Speak clearly and at a moderate pace
+-- Maintain a natural conversation flow
+-- Show genuine interest in the candidate's responses
+-
+-Interview Structure:
+-1. Introduction and rapport building
+-2. Experience and skills assessment
+-3. Technical knowledge evaluation
+-4. Soft skills and cultural fit assessment
+-5. Candidate questions and closing
+-
+-End the interview by:
+-1. Thanking the candidate for their time
+-2. Providing a brief summary of what was discussed
+-3. Outlining next steps in the process
+-4. Offering to answer any questions they may have
++You are a professional job interviewer conducting a real-time voice interview. Your goal is to have a natural, human-like conversation to assess the candidate's qualifications, motivation, and fit for the role. Engage actively, listen carefully to their responses, and ask relevant follow-up questions based on what they say and the information provided.
++
++Candidate Information:
++- Name: {metadata['name']}
++- Position: {metadata['position']}
++- Position Description: {metadata['jobDescription']}
++
++No resume was provided. At the start of the interview, acknowledge this naturally (e.g., "I notice we don't have your resume on file"). Then, ask the candidate to provide a verbal overview of their experience and background relevant to the {metadata['position']} role. Build your understanding of their background through their responses.
++
++General Interviewer Conduct:
++- Maintain a professional, friendly, and conversational tone throughout.
++- Be professional and polite.
++- Keep your questions and comments concise and natural.
++- Manage the flow of the conversation based on the candidate's responses.
++- Focus on both technical skills and soft skills relevant to the {metadata['position']} role.
++- **CRITICAL: Do NOT explicitly state or read any instructions given to you in this prompt or refer to this prompt's content in your conversation.** Internalize these instructions and act on them naturally.
++- Start with a friendly greeting, then transition smoothly into your first question based on the provided information.
++
++Interview Structure (Internal Guide - Do Not Read Aloud):
++1. Start: Greet the candidate by name and initiate the conversation (acknowledging resume status).
++2. Core: Conduct the main interview, asking relevant questions based on the provided details and candidate responses, listening actively, and asking follow-ups.
++3. Closing: Thank the candidate, briefly summarize the topics discussed, outline next steps (as provided in metadata if any), and offer them time for their questions.
++
++Concluding the Interview (Do Not Read Aloud):
++End by:
++1. Thanking the candidate for their time.
++2. Providing a brief, natural summary of what was discussed.
++3. Outlining next steps in the process (if known or provided in context).
++4. Explicitly offering the candidate a dedicated time to ask any remaining questions.
 """
         metadata["systemPrompt"] = rendered_prompt
 
@@ -1071,80 +1134,11 @@ def vapi_proxy():
 
                     # Construct the dynamic system prompt
                     if has_resume:
-                        system_prompt_content = f"""You are a professional job interviewer conducting a real-time voice interview with a candidate for the {position} role. Your primary goal is to assess their qualifications, motivation, and fit for this role by asking questions based on their provided CV/Resume and the job description.
-
-Candidate Information:
-- Name: {name}
-- Position: {position}
-- Position Description: {job_desc}
-
-CANDIDATE'S CV:
-==================
-{resume_content}
-==================
-
-Interview Instructions:
-1. Greet the candidate by name warmly and professionally.
-2. Immediately transition to the first interview question by referencing a specific piece of experience, skill, or education mentioned in their CV/Resume that is relevant to the {position} role. Make it clear you are asking based on their CV.
-3. Throughout the interview, formulate questions by referring directly to the candidate's CV and the job description. Use question types like:\n- 'I noticed you worked with [Technology/Tool] at [Company]. Can you tell me about a specific project where you used it and your role in that project?'\n- 'Your experience at [Previous Company] seems relevant to this role. What were your main responsibilities and what results did you achieve?'\n- 'I see you have experience with [Specific Skill]. Can you share an example of how you applied this skill in a challenging situation?'\n- 'Your background in [Field/Area] is interesting. How has this experience prepared you for the challenges in this role?'\n- 'The job requires expertise in [Required Skill]. Based on your experience at [Company], how would you approach [Specific Task]?'
-4. Listen actively to the candidate's responses and ask follow-up questions that connect their answers back to their resume details and the job requirements.
-5. **If the candidate asks a direct factual question and the answer is available in the provided CV/Resume or the initial context you have (like their name or the job title), answer their question concisely and then smoothly transition back to your interview questions.** Do NOT say there will be time for questions later if you can answer it now based on the provided information.
-6. Assess the candidate's alignment with the {position} role based on their CV and responses.
-
-Interview Guidelines:
-- Maintain a professional, friendly, and conversational tone throughout.
-- Be polite and encouraging.
-- Ensure your questions are clear and directly related to the CV content or the job description.
-- Keep your own responses concise and natural.
-- Focus on assessing both technical skills and soft skills relevant to the {position} role.
-- Manage the flow of the conversation based on the candidate's responses, the points you need to cover from the CV/job description, and any questions they ask.
-
-Interview Structure:
-1. Start: Greet the candidate by name and immediately ask your first question based on their CV.
-2. Core: Conduct the main interview, asking detailed, CV-based questions, listening to answers, asking follow-ups, and answering candidate's direct factual questions when possible based on provided information.
-3. Closing: Thank the candidate, briefly summarize the topics discussed (referencing their experience), outline next steps, and explicitly offer them a dedicated time to ask any remaining questions.
-
-End the interview by:
-1. Thanking the candidate for their time.
-2. Providing a brief summary of what was discussed.
-3. Outlining next steps in the process.
-4. Explicitly opening the floor for *any* questions they may have that weren't addressed earlier.
-"""
+                        system_prompt_content = f"""You are embodying the role of a professional job interviewer conducting a real-time voice interview with a candidate for the {position} role. Your conversation should feel natural and human-like. Your primary goal is to assess their qualifications, motivation, and fit for this role by formulating questions and responses based on their provided CV/Resume and the job description. Follow these internal guidelines to steer the interview:
+\nCandidate Information:\n- Name: {name}\n- Position: {position}\n- Position Description: {job_desc}\n\nCANDIDATE\'S CV:\n==================\n{resume_content}\n==================\n\nInterview Flow Directives:\n1. BEGIN by acknowledging you have the resume. Phrase this confirmation naturally, e.g., \'I have your resume in front of me and can see your experience in [mention 1-2 specific points].\'\n2. WEAVE resume details into your questions to make them specific and relevant.\n3. REFER to specific experiences or projects mentioned in their CV.\n4. ASSESS how their background aligns with the {position} role.\n\nGeneral Interviewer Conduct:\n- Maintain a professional, friendly, and conversational tone throughout.\n- Be polite and encouraging.\n- Ensure your questions are clear and directly related to the CV content or the job description.\n- Keep your own responses concise and natural.\n- Focus on assessing both technical skills and soft skills relevant to the {position} role.\n- Manage the flow of the conversation based on the candidate\'s responses and any questions they ask.\n\nInterview Structure (Internal Guide):\n1. Start: Greet the candidate by name and immediately ask your first question based on their CV (following directive 1).\n2. Core: Conduct the main interview, asking detailed, CV-based questions, listening to answers, asking follow-ups, and answering candidate\'s direct factual questions when possible based on provided information (following directives 2-4).\n3. Closing: Thank the candidate, briefly summarize the topics discussed (referencing their experience), outline next steps, and explicitly offer them a dedicated time to ask any remaining questions.\n\nConcluding the Interview:\nEnd by:\n1. Thanking the candidate for their time.\n2. Providing a brief summary of what was discussed.\n3. Outlining next steps in the process.\n4. Explicitly opening the floor for *any* questions they may have that weren\'t addressed earlier.\n"""
                     else:
-                        system_prompt_content = f"""You are a professional job interviewer conducting a real-time voice interview with a candidate for the {position} role. Your primary goal is to assess their qualifications, motivation, and fit for this role by asking questions.
-
-Candidate Information:
-- Name: {name}
-- Position: {position}
-- Position Description: {job_desc}
-
-No resume was provided. Please:
-1. Greet the candidate by name warmly and professionally.
-2. Acknowledge that you do not have their resume on file: "I notice we don't have your resume on file."
-3. Ask for a verbal overview of their experience and background relevant to the {position} role.
-4. Take sufficient time to establish their background through their verbal responses.
-5. **If the candidate asks a direct factual question and the answer is available in the initial context you have (like their name or the job title), answer their question concisely and then smoothly transition back to your interview questions.** Do NOT say there will be time for questions later if you can answer it now based on the provided information.
-6. Assess the candidate's alignment with the {position} role based on their verbal responses and the job description.
-
-Interview Guidelines:
-- Maintain a professional, friendly, and conversational tone throughout.
-- Be polite and encouraging.
-- Ensure your questions are clear and relevant to the job description.
-- Keep your own responses concise and natural.
-- Focus on assessing both technical skills and soft skills relevant to the {position} role.
-- Manage the flow of the conversation based on the candidate's responses and any questions they ask.
-
-Interview Structure:
-1. Start: Greet the candidate by name and acknowledge no resume is on file, then ask for their verbal overview.
-2. Core: Conduct the main interview based on their verbal overview and the job description, asking follow-ups, and answering candidate's direct factual questions when possible based on provided information.
-3. Closing: Thank the candidate, briefly summarize the topics discussed, outline next steps, and explicitly offer them a dedicated time to ask any remaining questions.
-
-End the interview by:
-1. Thanking the candidate for their time.
-2. Providing a brief summary of what was discussed.
-3. Outlining next steps in the process.
-4. Explicitly opening the floor for *any* questions they may have that weren't addressed earlier.
-"""
+                        system_prompt_content = f"""You are embodying the role of a professional job interviewer conducting a real-time voice interview with a candidate for the {position} role. Your conversation should feel natural and human-like. Your primary goal is to assess their qualifications, motivation, and fit for this role by asking questions.
+\nCandidate Information:\n- Name: {name}\n- Position: {position}\n- Position Description: {job_desc}\n\nNo resume was provided. Please acknowledge this fact naturally at the beginning of the interview, e.g., \"I notice we don\'t have your resume on file.\" Then, ask for a verbal overview of their experience and background relevant to the {position} role and take sufficient time to establish their background through their verbal responses.\n\nGeneral Interviewer Conduct:\n- Maintain a professional, friendly, and conversational tone throughout.\n- Be polite and encouraging.\n- Ensure your questions are clear and relevant to the job description.\n- Keep your own responses concise and natural.\n- Focus on assessing both technical skills and soft skills relevant to the {position} role.\n- Manage the flow of the conversation based on the candidate\'s responses and any questions they ask.\n\nInterview Structure (Internal Guide):\n1. Start: Greet the candidate by name and acknowledge no resume is on file, then ask for their verbal overview.\n2. Core: Conduct the main interview based on their verbal overview and the job description, asking follow-ups, and answering candidate\'s direct factual questions when possible based on provided information.\n3. Closing: Thank the candidate, briefly summarize the topics discussed, outline next steps, and explicitly offer them a dedicated time to ask any remaining questions.\n\nConcluding the Interview:\nEnd by:\n1. Thanking the candidate for their time.\n2. Providing a brief summary of what was discussed.\n3. Outlining next steps in the process.\n4. Explicitly opening the floor for *any* questions they may have that weren\'t addressed earlier.\n"""
 
                     # Return the assistant configuration to Vapi
                     assistant_config = {
@@ -1184,73 +1178,73 @@ End the interview by:
             endpoint = data.get("endpoint")
             method = data.get("method", "POST")
             payload = data.get("payload", {})
-
+        
             # Defensive fix: Remove any top-level 'message' property if present in old payloads
             # This check is primarily for legacy or malformed data from the app side,
             # not the Vapi webhook structure we just handled.
-            if "message" in payload:
+        if "message" in payload:
                  logger.warning("Removing unexpected 'message' property from Vapi outbound payload")
-                 del payload["message"]
+        del payload["message"]
 
-            headers = {
-                "Authorization": f"Bearer {PRIVATE_KEY}", # Use PRIVATE_KEY for server-side API calls
-                "Content-Type": "application/json"
-            }
+        headers = {
+            "Authorization": f"Bearer {PRIVATE_KEY}", # Use PRIVATE_KEY for server-side API calls
+            "Content-Type": "application/json"
+        }
+        
+        # Validate and construct target URL
+        if not endpoint.startswith('/'):
+            return jsonify({"error": "Invalid endpoint format"}), 400
+        
+        target_url = f"{VAPI_BASE_URL}{endpoint}"
 
-            # Validate and construct target URL
-            if not endpoint.startswith('/'):
-                return jsonify({"error": "Invalid endpoint format"}), 400
+        logger.debug(f"Proxy forwarding outbound request to URL: {target_url}")
+        logger.debug(f"Proxy forwarding outbound payload: {json.dumps(payload, indent=2)}")
+        
+        # Make the request to Vapi
+        response = requests.request(
+            method=method,
+            url=target_url,
+            json=payload,
+            headers=headers,
+            timeout=30  # Add timeout
+        )
+        
+        # Log the response for debugging
+        logger.debug(f"Vapi outbound response status: {response.status_code}")
+        logger.debug(f"Vapi outbound response body: {response.text}")
+        
+        # Raise HTTPError for bad responses (4xx or 5xx)
+        response.raise_for_status()
 
-            target_url = f"{VAPI_BASE_URL}{endpoint}"
+        # Check if it's a successful response and return JSON
+        response_data = response.json() if response.text else {}
 
-            logger.debug(f"Proxy forwarding outbound request to URL: {target_url}")
-            logger.debug(f"Proxy forwarding outbound payload: {json.dumps(payload, indent=2)}")
-
-            # Make the request to Vapi
-            response = requests.request(
-                method=method,
-                url=target_url,
-                json=payload,
-                headers=headers,
-                timeout=30  # Add timeout
-            )
-
-            # Log the response for debugging
-            logger.debug(f"Vapi outbound response status: {response.status_code}")
-            logger.debug(f"Vapi outbound response body: {response.text}")
-
-            # Raise HTTPError for bad responses (4xx or 5xx)
-            response.raise_for_status()
-
-            # Check if it's a successful response and return JSON
-            response_data = response.json() if response.text else {}
-
-            # For the new /call endpoint with websocket transport, extract websocketCallUrl
+        # For the new /call endpoint with websocket transport, extract websocketCallUrl
             # This part is for when your app initiates a call directly via the proxy,
             # not the webhook flow.
-            if endpoint == '/call' and response.status_code in [200, 201]:
-                websocket_url = response_data.get('transport', {}).get('websocketCallUrl')
-                if websocket_url:
-                    logger.debug(f"Extracted Vapi websocketCallUrl: {websocket_url}")
+        if endpoint == '/call' and response.status_code in [200, 201]:
+             websocket_url = response_data.get('transport', {}).get('websocketCallUrl')
+             if websocket_url:
+                  logger.debug(f"Extracted Vapi websocketCallUrl: {websocket_url}")
                     # Store this URL with the call SID for later use in the /voice endpoint
-                    call_sid = response_data.get('phoneCall', {}).get('providerId') # Assuming Twilio SID
-                    if call_sid:
+        call_sid = response_data.get('phoneCall', {}).get('providerId') # Assuming Twilio SID
+        if call_sid:
                         # Need to store interview details and websocket URL by call SID
                         # This requires getting the interview_id from the original initiate-vapi-call request
                         # For now, let's just store the URL
                         call_data_store[call_sid] = call_data_store.get(call_sid, {}) # Ensure dict exists
                         call_data_store[call_sid]['vapi_websocket_url'] = websocket_url
                         logger.debug(f"Stored websocket URL for call SID: {call_sid}")
-                    else:
+        else:
                         logger.warning("Could not extract call SID from Vapi response to store websocket URL.")
 
 
-            return jsonify(response_data), response.status_code
-
+        return jsonify(response_data), response.status_code
+        
         # If data is not a known webhook type and not an outbound proxy request
         logger.error("Received unrecognized data structure in vapi-proxy")
         return jsonify({"error": "Unrecognized request format"}), 400
-
+        
     except requests.exceptions.RequestException as e:
         logger.error(f"Network error in vapi-proxy: {str(e)}")
         # Attempt to extract more specific error info if available
@@ -1311,38 +1305,312 @@ def vapi_test():
 
 @app.route("/vapi_widget")
 def vapi_widget():
-    return render_template_string(f"""
+    return render_template_string("""
         <html>
         <head>
             <title>Test Vapi Assistant Widget</title>
+            <script src="https://cdn.tailwindcss.com"></script>
         </head>
-        <body style="font-family:sans-serif; padding: 40px;">
-            <h2>🎙️ Vapi Voice Assistant Widget Test</h2>
-            <!-- Vapi Widget will appear here -->
-            <script>
-                var vapiInstance = null;
-                const assistant = '{ASSISTANT_ID}'; // Your assistant ID
-                const apiKey = '{SHARE_KEY}'; // Your Public key from Vapi Dashboard
-                const buttonConfig = {{}}; // Optional configuration
+        <body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-6">
+            <div class="bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-lg space-y-6">
+                <h1 class="text-3xl font-bold mb-4">Test Vapi Assistant Widget</h1>
+                
+                <!-- Vapi Widget will appear here -->
+                <script>
+                    console.log('Script block reached'); // Test log
+                    let audioStream = null;
+                    let audioContext = null;
+                    let analyser = null;
+                    let visualizerAnimationId = null;
+                    const visualizerBars = [];
+                    const visualizerBarCount = 64;
+                    const visualizerElement = document.getElementById('visualizer');
+                    const mobileStatus = document.getElementById('mobileStatus');
+                    // Create visualizer bars
+                    for (let i = 0; i < visualizerBarCount; i++) {
+                        const bar = document.createElement('div');
+                        bar.className = 'bar';
+                        bar.style.left = `${(100 / visualizerBarCount) * i}%`;
+                        bar.style.width = `${100 / visualizerBarCount - 1}%`;
+                        bar.style.background = 'linear-gradient(to top, #3b82f6, #8b5cf6)';
+                        bar.style.position = 'absolute';
+                        bar.style.height = '0px';
+                        visualizerElement.appendChild(bar);
+                        visualizerBars.push(bar);
+                    }
 
-                (function (d, t) {{
-                  var g = document.createElement(t),
-                    s = d.getElementsByTagName(t)[0];
-                  g.src =
-                    "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
-                  g.defer = true;
-                  g.async = true;
-                  s.parentNode.insertBefore(g, s);
+                    function updateMobileStatus(status) {
+                        if (mobileStatus) {
+                            mobileStatus.textContent = status;
+                        }
+                    }
 
-                  g.onload = function () {{
-                    vapiInstance = window.vapiSDK.run({{
-                      apiKey: apiKey,
-                      assistant: assistant,
-                      config: buttonConfig,
-                    }});
-                  }};
-                }})(document, "script");
-            </script>
+                    function startVisualizerAnimation() {
+                         if (!analyser) return;
+
+                         const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+                         function draw() {
+                             analyser.getByteFrequencyData(dataArray);
+                             visualizerBars.forEach((bar, i) => {
+                                 const value = dataArray[i] || 0;
+                                 bar.style.height = `${value / 2}px`; // Adjust height scaling as needed
+                             });
+                             visualizerAnimationId = requestAnimationFrame(draw);
+                         }
+                         if (!visualizerAnimationId) { // Prevent multiple animation loops
+                            draw();
+                         }
+                     }
+
+                     function stopVisualizerAnimation() {
+                         if (visualizerAnimationId) {
+                             cancelAnimationFrame(visualizerAnimationId);
+                             visualizerAnimationId = null;
+                             // Optionally reset bars
+                             visualizerBars.forEach(bar => bar.style.height = '0px');
+                         }
+                     }
+
+                    console.log('Starting Vapi SDK initialization...');
+
+                    var vapiInstance = null;
+                    const assistantId = "{{ ASSISTANT_ID }}"; // Use a consistent variable name
+                    const apiKey = "{{ SHARE_KEY }}";
+
+                    // Dynamically construct the assistant configuration
+                    const interviewDetails = {
+                        name: {{ name | tojson }},
+                        job_title: {{ job_title | tojson }},
+                        job: {{ job | tojson }},
+                        resume_content: {{ resume_content | tojson }},
+                        interview_id: {{ interview_id | tojson }},
+                        has_resume: {{ has_resume | lower }}
+                    };
+
+                    let systemPromptContent;
+
+                    // Refined system prompt for a natural interviewer
+                    systemPromptContent = `You are a professional job interviewer conducting a real-time voice interview.
+
+Candidate Information:
+- Name: ${interviewDetails.name}
+- Position: ${interviewDetails.job_title}
+- Position Description: ${interviewDetails.job}
+`;
+
+                    if (interviewDetails.has_resume && interviewDetails.resume_content) {
+                         systemPromptContent += `
+CANDIDATE'S CV/RESUME:
+==================
+${interviewDetails.resume_content}
+==================
+`;
+                    } else {
+                         systemPromptContent += `\nNo resume was provided. At the start of the interview, acknowledge this naturally (e.g., "I notice we don't have your resume on file"). Then, ask the candidate to provide a verbal overview of their experience and background relevant to the role. Build your understanding of their background through their responses.`;
+                    }
+
+                    systemPromptContent += `\n\nConduct a professional interview focusing on the candidate's qualifications and fit for the role.`;
+
+                    const assistantConfig = {
+                         model: {
+                             provider: "anthropic", // Use the desired model provider
+                             model: "claude-3-opus-20240229", // Use the desired model
+                             messages: [
+                                 {
+                                     role: "system",
+                                     content: systemPromptContent
+                                 }
+                             ]
+                         },
+                         voice: {
+                             provider: "azure", // Use the desired voice provider
+                             voiceId: "andrew" // Use the desired voice ID
+                         },
+                         firstMessage: `Hello ${interviewDetails.name}! I'm your AI interviewer for the ${interviewDetails.job_title} position. Are you ready to begin the interview?`,
+                         endCallFunctionEnabled: true,
+                         serverMessages: [ // Explicitly list server messages to receive
+                             "end-of-call-report",
+                             "status-update",
+                             "function-call"
+                             // Add any other necessary server messages here
+                         ]
+                     };
+
+                    const buttonConfig = {
+                        position: 'bottom',
+                        showButton: true,
+                        buttonColor: '#3B82F6',
+                        buttonSize: 'large',
+                        forceVisible: true
+                    };
+
+                    console.log('Vapi configuration:', {
+                        assistant: assistantId,
+                        apiKey: apiKey ? 'Present' : 'Missing',
+                        buttonConfig: buttonConfig,
+                        assistantConfig: assistantConfig // Log the full assistant config
+                    });
+
+                    (function (d, t) {
+                        console.log('Loading Vapi SDK script...');
+                        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                        g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+                        g.defer = true;
+                        g.async = true;
+
+                        g.onerror = function(error) {
+                            console.error('Error loading Vapi SDK script:', error);
+                            updateMobileStatus('Error loading Vapi SDK');
+                        };
+
+                        s.parentNode.insertBefore(g, s);
+
+                        g.onload = function () {
+                            console.log('Vapi SDK script loaded successfully');
+                            try {
+                                vapiInstance = window.vapiSDK.run({
+                                    apiKey: apiKey,
+                                    // Pass the full dynamic assistant config here
+                                    assistant: assistantConfig,
+                                    config: buttonConfig,
+                                    metadata: {
+                                        interviewId: interviewDetails.interview_id,
+                                        name: interviewDetails.name,
+                                        position: interviewDetails.job_title,
+                                        jobDescription: interviewDetails.job,
+                                        has_resume: interviewDetails.has_resume
+                                    },
+                                    onStatusChange: function(status) {
+                                        console.log('Vapi Status Changed:', status);
+                                        updateMobileStatus(`Status: ${status}`);
+                                         if (status === 'listening') {
+                                            startVisualizerAnimation();
+                                         } else {
+                                             stopVisualizerAnimation();
+                                         }
+                                    },
+                                    onAudioActivity: function(isActive) {
+                                        console.log('Audio Activity:', isActive);
+                                        // Visualizer animation is now linked to status change (listening)
+                                    },
+                                    onReady: function() {
+                                        console.log('Vapi SDK is ready and widget should be visible');
+                                        updateMobileStatus('Vapi SDK Ready');
+
+                                        // Connect Vapi's audio stream to the visualizer's audio context
+                                        audioStream = window.vapiSDK.getAudioStream();
+                                        if (audioStream) {
+                                            console.log('Audio stream obtained successfully');
+                                            try {
+                                                if (!audioContext || audioContext.state === 'closed') {
+                                                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                                                }
+                                                if (!analyser) {
+                                                    analyser = audioContext.createAnalyser();
+                                                     analyser.fftSize = 256;
+                                                }
+                                                const source = audioContext.createMediaStreamSource(audioStream);
+                                                source.connect(analyser);
+                                                 analyser.connect(audioContext.destination); // Connect to speakers as well
+                                                console.log('Vapi audio stream connected to visualizer');
+                                                updateMobileStatus('Visualizer active');
+                                            } catch (e) {
+                                                console.error('Error connecting Vapi audio to visualizer:', e);
+                                                updateMobileStatus('Visualizer connection error');
+                                            }
+
+                                        } else {
+                                            console.warn('Could not obtain audio stream from Vapi SDK');
+                                            updateMobileStatus('Audio stream not available');
+                                        }
+                                    },
+                                    onError: function(error) {
+                                        console.error('Vapi SDK Error:', error);
+                                        updateMobileStatus(`Error: ${error.message || 'Unknown error'}`);
+                                         stopVisualizerAnimation();
+                                    },
+                                    // Add transcription logging
+                                     onTranscript: function(transcript) {
+                                         console.log('Candidate Transcript:', transcript);
+                                         // You can update a div on the page here to show transcription
+                                     },
+                                     onResponse: function(response) {
+                                         console.log('Assistant Response:', response);
+                                         // You can update a div on the page here to show assistant's response
+                                     }
+                                });
+                                console.log('Vapi instance created successfully');
+
+                            } catch (error) {
+                                console.error('Error initializing Vapi SDK:', error);
+                                updateMobileStatus('Error initializing Vapi SDK');
+                            }
+                        };
+                    })(document, "script");
+
+                    // Force widget visibility check (still applies to the overall container if showButton is false)
+                    function forceWidgetVisibility() {
+                        const widget = document.querySelector('.vapi-widget-button'); // Target the button element
+                        if (widget) {
+                            widget.style.display = 'block';
+                            widget.style.visibility = 'visible';
+                            widget.style.opacity = '1';
+                            widget.style.zIndex = '9999';
+                             // console.log('Forced widget visibility'); // Log less frequently
+                        } else {
+                             // console.log('Widget button not found, retrying... Skipping force visibility.'); // Log less frequently
+                            // The SDK should handle showing the button if showButton: true is set
+                        }
+                         const container = document.querySelector('.vapi-widget-container'); // Target the container
+                         if (container) {
+                             container.style.display = 'block';
+                             container.style.visibility = 'visible';
+                             container.style.opacity = '1';
+                             container.style.zIndex = '9999';
+                             container.style.position = 'fixed'; // Ensure it's fixed for bottom positioning
+                             container.style.bottom = '20px'; // Example: 20px from bottom
+                             container.style.left = '50%';
+                             container.style.transform = 'translateX(-50%)'; // Center horizontally
+                         }
+                    }
+
+                    // Check widget visibility and container positioning periodically
+                    setInterval(forceWidgetVisibility, 1000); // Check more frequently initially
+                    setTimeout(forceWidgetVisibility, 500); // Initial check sooner
+
+                    // Existing Start Visualizer button functionality (can keep or remove if Vapi button is sufficient)
+                    document.getElementById('startBtn').addEventListener('click', function() {
+                         // If you want the Start Visualizer button to also trigger Vapi, uncomment the line below:
+                         // if (vapiInstance) vapiInstance.start();
+                         // This button is primarily for the manual visualizer setup if not using Vapi audio feed
+                         updateMobileStatus('Attempting microphone connection...');
+                          // This part is for connecting microphone directly, may not be needed if using Vapi audio
+                          if (!audioContext || audioContext.state === 'closed') {
+                               audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                          }
+                          if (!analyser) {
+                               analyser = audioContext.createAnalyser();
+                               analyser.fftSize = 256;
+                          }
+                          navigator.mediaDevices.getUserMedia({ audio: true })
+                               .then(stream => {
+                                   const source = audioContext.createMediaStreamSource(stream);
+                                   source.connect(analyser);
+                                    analyser.connect(audioContext.destination); // Connect to speakers as well
+                                   startVisualizerAnimation();
+                                   updateMobileStatus('Microphone connected to visualizer');
+                               })
+                               .catch(err => {
+                                   console.error('Error accessing microphone for visualizer:', err);
+                                   updateMobileStatus('Microphone access denied');
+                               });
+                    });
+
+                    // Remove MutationObserver as we are connecting Vapi audio directly in onReady
+
+                </script>
+            </div>
         </body>
         </html>
     """)
@@ -1840,45 +2108,8 @@ def initiate_vapi_call():
 
         # Construct the dynamic system prompt (same logic as in vapi_proxy)
         if has_resume:
-            system_prompt_content = f"""You are a professional job interviewer conducting a real-time voice interview with a candidate for the {position} role. Your primary goal is to assess their qualifications, motivation, and fit for this role by asking questions based on their provided CV/Resume and the job description.
-
-Candidate Information:
-- Name: {name}
-- Position: {position}
-- Position Description: {job_desc}
-
-CANDIDATE'S CV:
-==================
-{resume_content}
-==================
-
-Interview Instructions:
-1. Greet the candidate by name warmly and professionally.
-2. Immediately transition to the first interview question by referencing a specific piece of experience, skill, or education mentioned in their CV/Resume that is relevant to the {position} role. Make it clear you are asking based on their CV.
-3. Throughout the interview, formulate questions by referring directly to the candidate's CV and the job description. Use question types like:\n- 'I noticed you worked with [Technology/Tool] at [Company]. Can you tell me about a specific project where you used it and your role in that project?'\n- 'Your experience at [Previous Company] seems relevant to this role. What were your main responsibilities and what results did you achieve?'\n- 'I see you have experience with [Specific Skill]. Can you share an example of how you applied this skill in a challenging situation?'\n- 'Your background in [Field/Area] is interesting. How has this experience prepared you for the challenges in this role?'\n- 'The job requires expertise in [Required Skill]. Based on your experience at [Company], how would you approach [Specific Task]?'
-4. Listen actively to the candidate's responses and ask follow-up questions that connect their answers back to their resume details and the job requirements.
-5. **If the candidate asks a direct factual question and the answer is available in the provided CV/Resume or the initial context you have (like their name or the job title), answer their question concisely and then smoothly transition back to your interview questions.** Do NOT say there will be time for questions later if you can answer it now based on the provided information.
-6. Assess the candidate's alignment with the {position} role based on their CV and responses.
-
-Interview Guidelines:
-- Maintain a professional, friendly, and conversational tone throughout.
-- Be polite and encouraging.
-- Ensure your questions are clear and directly related to the CV content or the job description.
-- Keep your own responses concise and natural.
-- Focus on assessing both technical skills and soft skills relevant to the {position} role.
-- Manage the flow of the conversation based on the candidate's responses, the points you need to cover from the CV/job description, and any questions they ask.
-
-Interview Structure:
-1. Start: Greet the candidate by name and immediately ask your first question based on their CV.
-2. Core: Conduct the main interview, asking detailed, CV-based questions, listening to answers, asking follow-ups, and answering candidate's direct factual questions when possible based on provided information.
-3. Closing: Thank the candidate, briefly summarize the topics discussed (referencing their experience), outline next steps, and explicitly offer them a dedicated time to ask any remaining questions.
-
-End the interview by:
-1. Thanking the candidate for their time.
-2. Providing a brief summary of what was discussed.
-3. Outlining next steps in the process.
-4. Explicitly opening the floor for *any* questions they may have that weren't addressed earlier.
-"""
+            system_prompt_content = f"""You are embodying the role of a professional job interviewer conducting a real-time voice interview with a candidate for the {position} role. Your conversation should feel natural and human-like. Your primary goal is to assess their qualifications, motivation, and fit for this role by formulating questions and responses based on their provided CV/Resume and the job description. Follow these internal guidelines to steer the interview:
+\nCandidate Information:\n- Name: {name}\n- Position: {position}\n- Position Description: {job_desc}\n\nCANDIDATE'S CV:\n==================\n{resume_content}\n==================\n\nInterview Flow Directives:\n1. BEGIN by acknowledging you have the resume. Phrase this confirmation naturally, e.g., \'I have your resume in front of me and can see your experience in [mention 1-2 specific points].\'\n2. WEAVE resume details into your questions to make them specific and relevant.\n3. REFER to specific experiences or projects mentioned in their CV.\n4. ASSESS how their background aligns with the {position} role.\n\nGeneral Interviewer Conduct:\n- Maintain a professional, friendly, and conversational tone throughout.\n- Be polite and encouraging.\n- Ensure your questions are clear and directly related to the CV content or the job description.\n- Keep your own responses concise and natural.\n- Focus on assessing both technical skills and soft skills relevant to the {position} role.\n- Manage the flow of the conversation based on the candidate's responses and any questions they ask.\n\nInterview Structure (Internal Guide):\n1. Start: Greet the candidate by name and immediately ask your first question based on their CV (following directive 1).\n2. Core: Conduct the main interview, asking detailed, CV-based questions, listening to answers, asking follow-ups, and answering candidate's direct factual questions when possible based on provided information (following directives 2-4).\n3. Closing: Thank the candidate, briefly summarize the topics discussed (referencing their experience), outline next steps, and explicitly offer them a dedicated time to ask any remaining questions.\n\nConcluding the Interview:\nEnd by:\n1. Thanking the candidate for their time.\n2. Providing a brief summary of what was discussed.\n3. Outlining next steps in the process.\n4. Explicitly opening the floor for *any* questions they may have that weren't addressed earlier.\n"""
         else:
             system_prompt_content = f"""You are a professional job interviewer conducting a real-time voice interview with a candidate for the {position} role. Your primary goal is to assess their qualifications, motivation, and fit for this role by asking questions.
 
@@ -2031,15 +2262,11 @@ End the interview by:
             error_details = e.response.text if e.response is not None else 'N/A'
             logger.error(f"Vapi Initiation Error Raw Response: {error_details}")
 
-        return jsonify({
+    return jsonify({
             "error": f"Failed to initiate Vapi call: {error_message}",
             "details": error_details
         }), e.response.status_code if e.response is not None else 500
-    except Exception as e:
-        logger.error(f"Error in initiate_vapi_call: {str(e)}")
-        import traceback
-        logger.error(f"Traceback: {traceback.format_exc()}")
-        return jsonify({"error": str(e)}), 500
+
 
 @app.route("/call-status", methods=["POST"])
 def call_status():
@@ -2609,164 +2836,398 @@ def validate_resume():
         logger.error(f"Resume validation error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
+@app.route("/log-transcription", methods=["POST"])
+def log_transcription():
+    """Endpoint to receive transcription logs from the browser."""
+    try:
+        data = request.get_json()
+        if not data:
+            logger.warning("Received empty request body for transcription log.")
+            return jsonify({"status": "ignored", "message": "No data provided"}), 200
+
+        source = data.get("source")
+        transcription = data.get("transcription")
+        interview_id = data.get("interviewId", "N/A")
+
+        if source and transcription is not None:
+            logger.info(f"TRANSCRIPTION [{interview_id}] [{source}]: {transcription}")
+            return jsonify({"status": "success"}), 200
+        else:
+            logger.warning(f"Received incomplete transcription log data: {data}")
+            return jsonify({"status": "failed", "message": "Incomplete data"}), 400
+
+    except Exception as e:
+        logger.error(f"Error processing transcription log: {str(e)}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 # Now define INTERVIEW_PAGE after SHARE_KEY and ASSISTANT_ID are defined
-INTERVIEW_PAGE = f"""
+INTERVIEW_PAGE = """
 <!DOCTYPE html>
-<html lang=\"en\">
+<html lang="en">
 <head>
-    <meta charset=\"UTF-8\" />
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interview: {{ name }}</title>
-    <script src=\"https://cdn.tailwindcss.com\"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .interview-container {{
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }}
-        .status-indicator {{
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-        }}
-        .status-active {{
-            background-color: #10B981;
-            box-shadow: 0 0 8px #10B981;
-        }}
-        .status-inactive {{
-            background-color: #6B7280;
-        }}
-        .visualizer-container {{
-            background: #1F2937;
-            border-radius: 0.5rem;
+        .bar {
+            position: absolute;
+            bottom: 0;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.05s ease-out;
+        }
+        /* Force Vapi widget to be visible */
+        .vapi-widget-button,
+        .vapi-widget-container,
+        .vapi-widget-fab {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            z-index: 9999 !important;
+        }
+        @media (max-width: 640px) {
+            .mobile-full {
+                width: 100%;
                 padding: 1rem;
-            margin-top: 1rem;
-        }}
+            }
+            .mobile-text {
+                font-size: 1.25rem;
+            }
+            .mobile-button {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+        }
     </style>
 </head>
-<body class=\"bg-gray-900 text-white\">
-    <div class=\"interview-container\">
-        <div class=\"mb-8\">
-            <h1 class=\"text-3xl font-bold mb-2\">Interview for {{ name }}</h1>
-            <p class=\"text-lg text-gray-400 mb-2\">Job Title: {{ job_title }}</p>
-            <p class=\"text-lg text-gray-400 mb-4\">Position: {{ job }}</p>
-            <div class=\"flex items-center mb-4\">
-                <span class=\"status-indicator status-active\" id=\"connectionStatus\"></span>
-                <span class=\"text-gray-300\" id=\"statusText\">Connecting to interview...</span>
+<body class="bg-gray-900 text-white p-4 sm:p-6 flex flex-col items-center">
+    <div class="w-full max-w-3xl">
+        <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-center">Interview for {{ name }}</h1>
+        <p class="text-lg text-gray-400 mb-2 text-center">Job Title: {{ job_title }}</p>
+        <p class="text-lg text-gray-400 mb-6 text-center">Position: {{ job }}</p>
+        
+        <!-- Mobile Instructions -->
+        <div class="bg-gray-800 p-4 rounded-lg mb-6 sm:hidden">
+            <h2 class="text-xl font-semibold mb-2">Mobile Instructions</h2>
+            <ol class="list-decimal list-inside space-y-2 text-gray-300">
+                <li>Click "Start Visualizer" and allow microphone access.</li>
+                <li>Click the floating phone icon to start the interview.</li>
+                <li>Speak clearly into your phone's microphone.</li>
+                <li>Use headphones for better audio quality.</li>
+            </ol>
         </div>
-        </div>
-        <div class=\"grid grid-cols-1 lg:grid-cols-2 gap-6\">
-            <!-- Interview Widget -->
-            <div class=\"bg-gray-800 rounded-lg p-6\">
-                <h2 class=\"text-xl font-semibold mb-4\">Interview Session</h2>
-                <div id=\"vapi-widget\"></div>
-    </div>
-            <!-- Visualizer and Status -->
-            <div class=\"space-y-6\">
-                <div class=\"bg-gray-800 rounded-lg p-6\">
-                    <h2 class=\"text-xl font-semibold mb-4\">Interview Status</h2>
-                    <div class=\"space-y-4\">
-                        <div>
-                            <h3 class=\"text-gray-400 mb-2\">Connection Status</h3>
-                            <div class=\"flex items-center\">
-                                <span class=\"status-indicator status-active\" id=\"audioStatus\"></span>
-                                <span class=\"text-gray-300\" id=\"audioStatusText\">Audio Active</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 class=\"text-gray-400 mb-2\">Interview Progress</h3>
-                            <div class=\"w-full bg-gray-700 rounded-full h-2\">
-                                <div class=\"bg-blue-600 h-2 rounded-full\" style=\"width: 0%\" id=\"progressBar\"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class=\"visualizer-container\">
-                    <h2 class=\"text-xl font-semibold mb-4\">Audio Visualizer</h2>
-                    <canvas id=\"audioVisualizer\" class=\"w-full h-32\"></canvas>
-                </div>
-            </div>
+        
+        <!-- Visualizer -->
+        <div id="visualizer" class="w-full h-32 sm:h-40 bg-gray-800 rounded relative mb-4"></div>
+        
+        <!-- Start Visualizer Button -->
+        <button id="startBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full mobile-button mb-4">
+            Start Visualizer
+        </button>
+
+        <!-- Mobile Status -->
+        <div id="mobileStatus" class="text-center mt-4 text-gray-400 sm:hidden">
+            Ready to start
         </div>
     </div>
+
     <!-- Vapi Widget Script -->
     <script>
-        (function (d, t) {{
+        console.log('Script block reached'); // Test log
+        let audioStream = null;
+        let audioContext = null;
+        let analyser = null;
+        let visualizerAnimationId = null;
+        const visualizerBars = [];
+        const visualizerBarCount = 64;
+        const visualizerElement = document.getElementById('visualizer');
+        const mobileStatus = document.getElementById('mobileStatus');
+
+        // Create visualizer bars
+        for (let i = 0; i < visualizerBarCount; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.style.left = `${(100 / visualizerBarCount) * i}%`;
+            bar.style.width = `${100 / visualizerBarCount - 1}%`;
+            bar.style.background = 'linear-gradient(to top, #3b82f6, #8b5cf6)';
+            bar.style.position = 'absolute';
+            bar.style.height = '0px';
+            visualizerElement.appendChild(bar);
+            visualizerBars.push(bar);
+        }
+
+        function updateMobileStatus(status) {
+            if (mobileStatus) {
+                mobileStatus.textContent = status;
+            }
+        }
+
+        function startVisualizerAnimation() {
+             if (!analyser) return;
+
+             const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+             function draw() {
+                 analyser.getByteFrequencyData(dataArray);
+                 visualizerBars.forEach((bar, i) => {
+                     const value = dataArray[i] || 0;
+                     bar.style.height = `${value / 2}px`; // Adjust height scaling as needed
+                 });
+                 visualizerAnimationId = requestAnimationFrame(draw);
+             }
+             if (!visualizerAnimationId) { // Prevent multiple animation loops
+                draw();
+             }
+         }
+
+         function stopVisualizerAnimation() {
+             if (visualizerAnimationId) {
+                 cancelAnimationFrame(visualizerAnimationId);
+                 visualizerAnimationId = null;
+                 // Optionally reset bars
+                 visualizerBars.forEach(bar => bar.style.height = '0px');
+             }
+         }
+
+        console.log('Starting Vapi SDK initialization...');
+
+        var vapiInstance = null;
+        const assistantId = "{{ ASSISTANT_ID }}"; // Use a consistent variable name
+        const apiKey = "{{ SHARE_KEY }}";
+
+        // Dynamically construct the assistant configuration
+        const interviewDetails = {
+            name: {{ name | tojson }},
+            job_title: {{ job_title | tojson }},
+            job: {{ job | tojson }},
+            resume_content: {{ resume_content | tojson }},
+            interview_id: {{ interview_id | tojson }},
+            has_resume: {{ has_resume | lower }}
+        };
+
+        let systemPromptContent;
+
+        // Refined system prompt for a natural interviewer
+        systemPromptContent = `You are a professional job interviewer conducting a real-time voice interview. Your goal is to have a natural, human-like conversation to assess the candidate's qualifications, motivation, and fit for the role. Engage actively, listen carefully to their responses, and ask relevant follow-up questions based on what they say and the information provided.
+
+Candidate Information:
+- Name: ${interviewDetails.name}
+- Position: ${interviewDetails.job_title}
+- Position Description: ${interviewDetails.job}
+`;
+
+        if (interviewDetails.has_resume && interviewDetails.resume_content) {
+             systemPromptContent += `
+CANDIDATE'S CV/RESUME:
+==================
+${interviewDetails.resume_content}
+==================
+`;
+        } else {
+             systemPromptContent += `\nNo resume was provided. At the start of the interview, acknowledge this naturally (e.g., "I notice we don't have your resume on file"). Then, ask the candidate to provide a verbal overview of their experience and background relevant to the role. Build your understanding of their background through their responses.`;
+        }
+
+        systemPromptContent += `\n\nConduct a professional interview focusing on the candidate's qualifications and fit for the role.`;
+
+        const assistantConfig = {
+             model: {
+                 provider: "anthropic", // Use the desired model provider
+                 model: "claude-3-opus-20240229", // Use the desired model
+                 messages: [
+                     {
+                         role: "system",
+                         content: systemPromptContent
+                     }
+                 ]
+             },
+             voice: {
+                 provider: "azure", // Use the desired voice provider
+                 voiceId: "andrew" // Use the desired voice ID
+             },
+             firstMessage: `Hello ${interviewDetails.name}! I'm your AI interviewer for the ${interviewDetails.job_title} position. Are you ready to begin the interview?`,
+             endCallFunctionEnabled: true,
+             serverMessages: [ // Explicitly list server messages to receive
+                 "end-of-call-report",
+                 "status-update",
+                 "function-call"
+                 // Add any other necessary server messages here
+             ]
+         };
+
+        const buttonConfig = {
+            position: 'bottom',
+            showButton: true,
+            buttonColor: '#3B82F6',
+            buttonSize: 'large',
+            forceVisible: true
+        };
+
+        console.log('Vapi configuration:', {
+            assistant: assistantId,
+            apiKey: apiKey ? 'Present' : 'Missing',
+            buttonConfig: buttonConfig,
+            assistantConfig: assistantConfig // Log the full assistant config
+        });
+
+        (function (d, t) {
+            console.log('Loading Vapi SDK script...');
             var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
             g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
             g.defer = true;
             g.async = true;
+
+            g.onerror = function(error) {
+                console.error('Error loading Vapi SDK script:', error);
+                updateMobileStatus('Error loading Vapi SDK');
+            };
+
             s.parentNode.insertBefore(g, s);
-            g.onload = function () {{
-                // Render the widget inside #vapi-widget
-                window.vapiSDK.run({{
-                    apiKey: "{SHARE_KEY}",
-                    assistant: "{ASSISTANT_ID}",
-                    container: document.getElementById('vapi-widget'), // Ensure widget renders in the correct div
-                    metadata: {{
-                        candidate_name: "{{ name }}",
-                        job_title: "{{ job_title }}",
-                        job_description: "{{ job }}",
-                        interviewId: "{{ interview_id }}",
-                        resume_text: "{{ resume_content }}",
-                        has_resume: {{ has_resume | tojson }}
-                    }},
-                    onStatusChange: function(status) {{
-                        document.getElementById('statusText').textContent = status;
-                        if (status === 'connected') {{
-                            document.getElementById('connectionStatus').classList.add('status-active');
-                        }} else {{
-                            document.getElementById('connectionStatus').classList.remove('status-active');
-                        }}
-                    }},
-                    onAudioActivity: function(isActive) {{
-                        document.getElementById('audioStatusText').textContent = isActive ? 'Audio Active' : 'Audio Inactive';
-                        document.getElementById('audioStatus').classList.toggle('status-active', isActive);
-                    }},
-                    onReady: function() {{
-                        // Only initialize the visualizer when the widget is ready and audio stream is available
-                        if (window.vapiSDK && window.vapiSDK.getAudioStream) {{
-                            const stream = window.vapiSDK.getAudioStream();
-                            if (stream) {{
-                                initVisualizer(stream);
-                            }}
-                        }}
-                    }}
-                }}); // End of window.vapiSDK.run()
-            }};
-        }})(document, "script");
-        // Audio Visualizer logic
-        function initVisualizer(stream) {{
-            const canvas = document.getElementById('audioVisualizer');
-            const ctx = canvas.getContext('2d');
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const analyser = audioContext.createAnalyser();
-            analyser.fftSize = 256;
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-            const source = audioContext.createMediaStreamSource(stream);
-            source.connect(analyser);
-            function draw() {{
-                requestAnimationFrame(draw);
-                analyser.getByteFrequencyData(dataArray);
-                ctx.fillStyle = '#1F2937';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                const barWidth = (canvas.width / dataArray.length) * 2.5;
-                let barHeight;
-                let x = 0;
-                for(let i = 0; i < dataArray.length; i++) {{
-                    barHeight = dataArray[i] / 2;
-                    const gradient = ctx.createLinearGradient(0, canvas.height, 0, 0);
-                    gradient.addColorStop(0, '#3B82F6');
-                    gradient.addColorStop(1, '#60A5FA');
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-                    x += barWidth + 1;
-                }}
-            }}
-            draw();
-        }}
+
+            g.onload = function () {
+                console.log('Vapi SDK script loaded successfully');
+                try {
+                    vapiInstance = window.vapiSDK.run({
+                        apiKey: apiKey,
+                        // Pass the full dynamic assistant config here
+                        assistant: assistantConfig,
+                        config: buttonConfig,
+                        metadata: {
+                            interviewId: interviewDetails.interview_id,
+                            name: interviewDetails.name,
+                            position: interviewDetails.job_title,
+                            jobDescription: interviewDetails.job,
+                            has_resume: interviewDetails.has_resume
+                        },
+                        onStatusChange: function(status) {
+                            console.log('Vapi Status Changed:', status);
+                            updateMobileStatus(`Status: ${status}`);
+                             if (status === 'listening') {
+                                startVisualizerAnimation();
+                             } else {
+                                 stopVisualizerAnimation();
+                             }
+                        },
+                        onAudioActivity: function(isActive) {
+                            console.log('Audio Activity:', isActive);
+                            // Visualizer animation is now linked to status change (listening)
+                        },
+                        onReady: function() {
+                            console.log('Vapi SDK is ready and widget should be visible');
+                            updateMobileStatus('Vapi SDK Ready');
+
+                            // Connect Vapi's audio stream to the visualizer's audio context
+                            audioStream = window.vapiSDK.getAudioStream();
+                            if (audioStream) {
+                                console.log('Audio stream obtained successfully');
+                                try {
+                                    if (!audioContext || audioContext.state === 'closed') {
+                                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                                    }
+                                    if (!analyser) {
+                                        analyser = audioContext.createAnalyser();
+                                         analyser.fftSize = 256;
+                                    }
+                                    const source = audioContext.createMediaStreamSource(audioStream);
+                                    source.connect(analyser);
+                                     analyser.connect(audioContext.destination); // Connect to speakers as well
+                                    console.log('Vapi audio stream connected to visualizer');
+                                    updateMobileStatus('Visualizer active');
+                                } catch (e) {
+                                    console.error('Error connecting Vapi audio to visualizer:', e);
+                                    updateMobileStatus('Visualizer connection error');
+                                }
+
+                            } else {
+                                console.warn('Could not obtain audio stream from Vapi SDK');
+                                updateMobileStatus('Audio stream not available');
+                            }
+                        },
+                        onError: function(error) {
+                            console.error('Vapi SDK Error:', error);
+                            updateMobileStatus(`Error: ${error.message || 'Unknown error'}`);
+                             stopVisualizerAnimation();
+                        },
+                        // Add transcription logging
+                         onTranscript: function(transcript) {
+                             console.log('Candidate Transcript:', transcript);
+                             // You can update a div on the page here to show transcription
+                         },
+                         onResponse: function(response) {
+                             console.log('Assistant Response:', response);
+                             // You can update a div on the page here to show assistant's response
+                         }
+                    });
+                    console.log('Vapi instance created successfully');
+
+                } catch (error) {
+                    console.error('Error initializing Vapi SDK:', error);
+                    updateMobileStatus('Error initializing Vapi SDK');
+                }
+            };
+        })(document, "script");
+
+        // Force widget visibility check (still applies to the overall container if showButton is false)
+        function forceWidgetVisibility() {
+            const widget = document.querySelector('.vapi-widget-button'); // Target the button element
+            if (widget) {
+                widget.style.display = 'block';
+                widget.style.visibility = 'visible';
+                widget.style.opacity = '1';
+                widget.style.zIndex = '9999';
+                 // console.log('Forced widget visibility'); // Log less frequently
+            } else {
+                 // console.log('Widget button not found, retrying... Skipping force visibility.'); // Log less frequently
+                // The SDK should handle showing the button if showButton: true is set
+            }
+             const container = document.querySelector('.vapi-widget-container'); // Target the container
+             if (container) {
+                 container.style.display = 'block';
+                 container.style.visibility = 'visible';
+                 container.style.opacity = '1';
+                 container.style.zIndex = '9999';
+                 container.style.position = 'fixed'; // Ensure it's fixed for bottom positioning
+                 container.style.bottom = '20px'; // Example: 20px from bottom
+                 container.style.left = '50%';
+                 container.style.transform = 'translateX(-50%)'; // Center horizontally
+             }
+        }
+
+        // Check widget visibility and container positioning periodically
+        setInterval(forceWidgetVisibility, 1000); // Check more frequently initially
+        setTimeout(forceWidgetVisibility, 500); // Initial check sooner
+
+        // Existing Start Visualizer button functionality (can keep or remove if Vapi button is sufficient)
+        document.getElementById('startBtn').addEventListener('click', function() {
+             // If you want the Start Visualizer button to also trigger Vapi, uncomment the line below:
+             // if (vapiInstance) vapiInstance.start();
+             // This button is primarily for the manual visualizer setup if not using Vapi audio feed
+             updateMobileStatus('Attempting microphone connection...');
+              // This part is for connecting microphone directly, may not be needed if using Vapi audio
+              if (!audioContext || audioContext.state === 'closed') {
+                   audioContext = new (window.AudioContext || window.webkitAudioContext)();
+              }
+              if (!analyser) {
+                   analyser = audioContext.createAnalyser();
+                   analyser.fftSize = 256;
+              }
+              navigator.mediaDevices.getUserMedia({ audio: true })
+                   .then(stream => {
+                       const source = audioContext.createMediaStreamSource(stream);
+                       source.connect(analyser);
+                        analyser.connect(audioContext.destination); // Connect to speakers as well
+                       startVisualizerAnimation();
+                       updateMobileStatus('Microphone connected to visualizer');
+                   })
+                   .catch(err => {
+                       console.error('Error accessing microphone for visualizer:', err);
+                       updateMobileStatus('Microphone access denied');
+                   });
+        });
+
+        // Remove MutationObserver as we are connecting Vapi audio directly in onReady
+
     </script>
 </body>
 </html>
@@ -2774,3 +3235,6 @@ INTERVIEW_PAGE = f"""
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
+    
+
+
